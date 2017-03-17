@@ -70,7 +70,7 @@ class GameTime extends React.Component{
    constructor(props){
    super(props)
    this.state ={
-      counter: 5,
+      counter: 30,
       score: this.props.score,
       wrong: this.props.wrong
    }
