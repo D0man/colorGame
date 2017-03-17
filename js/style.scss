@@ -5,7 +5,16 @@ body{
 h1{
    text-align: center;
 }
+.out{
+   position:absolute;
+   height: 250px;
+   width:400px;
+   background-color: black;
+   color:white;
+}
+
 .gameBody{
+   position: relative;
    margin: 0 auto;
    background-color: white;
    border: solid 2px #0044FF;

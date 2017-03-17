@@ -9466,6 +9466,7 @@ function randomize(arr) {
    }
    return arr;
 }
+var intro = true;
 var colorArr = ['blue', 'red', 'green', 'pink'];
 var colorText = ['blue', 'red', 'green', 'pink'];
 var colorMainText = ['blue', 'red', 'green', 'pink'];
@@ -9502,6 +9503,16 @@ var answer = randomize(colorMainText)[0];
 //          })}
 //          </div>
 //    }
+// }
+// class Intro extends React.Component{
+//    constructor(props){
+//    super(props);
+//    this.state={
+//       napis: "start game"
+//    }
+// }
+// render(){
+//    return }
 // }
 
 var MainColor = function (_React$Component) {
@@ -9544,7 +9555,7 @@ var GameTime = function (_React$Component2) {
       var _this2 = _possibleConstructorReturn(this, (GameTime.__proto__ || Object.getPrototypeOf(GameTime)).call(this, props));
 
       _this2.state = {
-         counter: 5,
+         counter: 30,
          score: _this2.props.score,
          wrong: _this2.props.wrong
       };
@@ -9575,37 +9586,59 @@ var GameTime = function (_React$Component2) {
    }, {
       key: 'render',
       value: function render() {
-         if (this.state.counter != 0) return _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
+         if (this.state.counter != 0) {
+            return _react2.default.createElement(
                'div',
                null,
                _react2.default.createElement(
-                  'span',
+                  'div',
                   null,
-                  this.state.counter,
-                  'S'
-               ),
-               _react2.default.createElement(
-                  'span',
-                  null,
-                  'Score:',
-                  this.props.score
-               ),
-               _react2.default.createElement(
-                  'span',
-                  null,
-                  'Wrong: ',
-                  this.props.wrong
+                  _react2.default.createElement(
+                     'span',
+                     null,
+                     this.state.counter,
+                     'S'
+                  ),
+                  _react2.default.createElement(
+                     'span',
+                     null,
+                     'Good:',
+                     this.props.score
+                  ),
+                  _react2.default.createElement(
+                     'span',
+                     null,
+                     'Wrong: ',
+                     this.props.wrong
+                  )
                )
-            )
-         );else return _react2.default.createElement(
-            'span',
-            null,
-            'Score: ',
-            this.props.score
-         );
+            );
+         } else {
+            return _react2.default.createElement(
+               'div',
+               { className: 'out' },
+               _react2.default.createElement(
+                  'div',
+                  null,
+                  _react2.default.createElement(
+                     'span',
+                     null,
+                     'Score: ',
+                     this.props.score - this.props.wrong
+                  )
+               ),
+               _react2.default.createElement(
+                  'div',
+                  null,
+                  'Play Again (push f5)'
+               ),
+               _react2.default.createElement(
+                  'div',
+                  null,
+                  'HighScore (nie dziala)'
+               )
+            );
+         }
       }
    }]);
 
@@ -9620,9 +9653,19 @@ var GameCore = function (_React$Component3) {
 
       var _this4 = _possibleConstructorReturn(this, (GameCore.__proto__ || Object.getPrototypeOf(GameCore)).call(this, props));
 
-      _this4.handleClick = function (i) {
-         console.log(_this4.state.color[i]);
+      _this4.handleStart = function () {
+         _this4.setState({
+            intro: false
+         });
+      };
 
+      _this4.handleClick = function (i) {
+         console.log(_this4.state.colorText[i]);
+         console.log(_this4.state.colorText[0]);
+         console.log(_this4.state.colorText[1]);
+         console.log(_this4.state.colorText[2]);
+
+         console.log("odpowiedz po kliku:" + _this4.state.answer);
          if (_this4.state.colorText[i] == _this4.state.answer) {
 
             _this4.setState({
@@ -9647,11 +9690,15 @@ var GameCore = function (_React$Component3) {
          wrong: 0,
          color: randomize(colorArr),
          colorText: randomize(colorText),
-         answer: randomize(colorMainText)[0]
+         answer: randomize(colorMainText)[0],
+         intro: true,
+         napis: "start game"
 
       };
-
-      console.log(_this4.state.good);
+      console.log(_this4.state.colorText[0]);
+      console.log(_this4.state.colorText[1]);
+      console.log(_this4.state.colorText[2]);
+      console.log("odpowiedz:" + _this4.state.answer);
       return _this4;
    }
 
@@ -9660,43 +9707,47 @@ var GameCore = function (_React$Component3) {
       value: function render() {
          var _this5 = this;
 
-         console.log(this.state.counter);
-         if (this.state.counter != 0) return _react2.default.createElement(
-            'div',
-            { className: 'gameBody' },
-            _react2.default.createElement(GameTime, { wrong: this.state.wrong, score: this.state.score }),
-            _react2.default.createElement(
+         console.log(this.state.intro);
+         if (this.state.intro) {
+            return _react2.default.createElement(
                'div',
-               null,
-               _react2.default.createElement(MainColor, { answer: this.state.answer })
-            ),
-            _react2.default.createElement(
-               'div',
-               null,
+               { className: 'gameBody', onClick: this.handleStart },
                _react2.default.createElement(
                   'div',
                   null,
-                  this.state.color.map(function (el, i) {
-                     if (i > 2) return null;else return _react2.default.createElement(
-                        'span',
-                        { key: _this5.state.color[i], style: { color: el }, onClick: function onClick() {
-                              return _this5.handleClick(i);
-                           } },
-                        _this5.state.colorText[i]
-                     );
-                  })
+                  this.state.napis
+               ),
+               _react2.default.createElement('div', null)
+            );
+         } else {
+            return _react2.default.createElement(
+               'div',
+               { className: 'gameBody' },
+               _react2.default.createElement(GameTime, { className: 'gameNav', wrong: this.state.wrong, score: this.state.score }),
+               _react2.default.createElement(
+                  'div',
+                  null,
+                  _react2.default.createElement(MainColor, { answer: this.state.answer })
+               ),
+               _react2.default.createElement(
+                  'div',
+                  null,
+                  _react2.default.createElement(
+                     'div',
+                     null,
+                     this.state.color.map(function (el, i) {
+                        if (i > 2) return null;else return _react2.default.createElement(
+                           'span',
+                           { key: _this5.state.color[i], style: { color: el }, onClick: function onClick() {
+                                 return _this5.handleClick(i);
+                              } },
+                           _this5.state.colorText[i]
+                        );
+                     })
+                  )
                )
-            )
-         );else return _react2.default.createElement(
-            'div',
-            { className: 'outro' },
-            _react2.default.createElement(
-               'span',
-               null,
-               'Twoj wynik to ',
-               this.props.score
-            )
-         );
+            );
+         }
       }
    }]);
 
@@ -10202,7 +10253,7 @@ exports = module.exports = __webpack_require__(82)();
 
 
 // module
-exports.push([module.i, "body {\n  background-color: purple;\n  font-family: 'Baloo Bhaina', cursive; }\n\nh1 {\n  text-align: center; }\n\n.gameBody {\n  margin: 0 auto;\n  background-color: white;\n  border: solid 2px #0044FF;\n  height: 250px;\n  width: 400px;\n  font-size: 30px;\n  text-align: center; }\n  .gameBody .gameNav {\n    font-size: 20px;\n    background-color: #00ffff; }\n    .gameBody .gameNav span {\n      cursor: auto;\n      color: black;\n      margin-left: 10px; }\n  .gameBody .question {\n    box-sizing: content-box;\n    padding: 20px;\n    color: blue; }\n  .gameBody span {\n    cursor: pointer;\n    color: red;\n    margin-left: 0 auto; }\n  .gameBody span:nth-child(2) {\n    color: blue;\n    margin: 0 20px; }\n  .gameBody span:nth-child(3) {\n    color: green; }\n", ""]);
+exports.push([module.i, "body {\n  background-color: purple;\n  font-family: 'Baloo Bhaina', cursive; }\n\nh1 {\n  text-align: center; }\n\n.out {\n  position: absolute;\n  height: 250px;\n  width: 400px;\n  background-color: black;\n  color: white; }\n\n.gameBody {\n  position: relative;\n  margin: 0 auto;\n  background-color: white;\n  border: solid 2px #0044FF;\n  height: 250px;\n  width: 400px;\n  font-size: 30px;\n  text-align: center; }\n  .gameBody .gameNav {\n    font-size: 20px;\n    background-color: #00ffff; }\n    .gameBody .gameNav span {\n      cursor: auto;\n      color: black;\n      margin-left: 10px; }\n  .gameBody .question {\n    box-sizing: content-box;\n    padding: 20px;\n    color: blue; }\n  .gameBody span {\n    cursor: pointer;\n    color: red;\n    margin-left: 0 auto; }\n  .gameBody span:nth-child(2) {\n    color: blue;\n    margin: 0 20px; }\n  .gameBody span:nth-child(3) {\n    color: green; }\n", ""]);
 
 // exports
 

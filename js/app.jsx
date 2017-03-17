@@ -15,6 +15,7 @@ function randomize(arr){
    }
    return arr;
 }
+let intro = true;
 let colorArr =['blue','red','green','pink'];
 let colorText =['blue','red','green','pink'];
 let colorMainText=['blue','red','green','pink'];
@@ -52,6 +53,16 @@ let answer=randomize(colorMainText)[0];
 //          </div>
 //    }
 // }
+// class Intro extends React.Component{
+//    constructor(props){
+//    super(props);
+//    this.state={
+//       napis: "start game"
+//    }
+// }
+// render(){
+//    return }
+// }
 class MainColor extends React.Component{
    constructor(props){
       super(props);
@@ -70,7 +81,7 @@ class GameTime extends React.Component{
    constructor(props){
    super(props)
    this.state ={
-      counter: 5,
+      counter: 30,
       score: this.props.score,
       wrong: this.props.wrong
    }
@@ -92,13 +103,15 @@ class GameTime extends React.Component{
     clearInterval(this.timerId);
   }
   render(){
-     if (this.state.counter!=0)
+     if (this.state.counter!=0){
          return <div>
-            <div><span>{this.state.counter}S</span><span>Score:{this.props.score}</span><span>Wrong: {this.props.wrong}</span></div>
+            <div><span>{this.state.counter}S</span><span>Good:{this.props.score}</span><span>Wrong: {this.props.wrong}</span></div>
             </div>
-     else
-         return <span>Score: {this.props.score}</span>
-  }
+         }
+         else{
+             return <div className='out'><div><span>Score: {this.props.score-this.props.wrong}</span></div><div>Play Again (push f5)</div><div>HighScore (nie dziala)</div></div>
+      }
+      }
 }
 class GameCore extends React.Component{
   constructor(props){
@@ -108,15 +121,28 @@ class GameCore extends React.Component{
       wrong: 0,
       color: randomize(colorArr),
       colorText: randomize(colorText),
-      answer: randomize(colorMainText)[0]
+      answer: randomize(colorMainText)[0],
+      intro:true,
+      napis: "start game"
 
     }
-
-    console.log(this.state.good);
+    console.log(this.state.colorText[0]);
+    console.log(this.state.colorText[1]);
+    console.log(this.state.colorText[2]);
+    console.log("odpowiedz:"+this.state.answer);
 }
+    handleStart = ()=>{
+      this.setState({
+         intro: false
+      })
+   }
     handleClick = (i)=>{
-      console.log(this.state.color[i]);
+      console.log(this.state.colorText[i]);
+      console.log(this.state.colorText[0]);
+      console.log(this.state.colorText[1]);
+      console.log(this.state.colorText[2]);
 
+      console.log("odpowiedz po kliku:"+this.state.answer);
       if (this.state.colorText[i]==this.state.answer){
 
          this.setState({
@@ -131,17 +157,20 @@ class GameCore extends React.Component{
       this.setState({wrong: this.state.wrong+1,
          color: randomize(colorArr),
          colorText: randomize(colorText),
-         answer: randomize(colorMainText)[0]
+         answer: randomize(colorMainText)[0],
       })
       //console.log("zle:"+this.state.wrong);
       }
    }
 
   render(){
-     console.log(this.state.counter);
-     if (this.state.counter!=0)
+     console.log(this.state.intro);
+         if (this.state.intro){
+            return <div  className='gameBody' onClick={this.handleStart}><div>{this.state.napis}</div><div></div></div>
+         }
+         else{
          return <div className="gameBody">
-            <GameTime wrong={this.state.wrong} score={this.state.score}/>
+            <GameTime className="gameNav" wrong={this.state.wrong} score={this.state.score}/>
             <div><MainColor answer={this.state.answer}/></div>
             <div><div>
                  {this.state.color.map((el,i)=>{
@@ -152,13 +181,12 @@ class GameCore extends React.Component{
                })}
                </div></div>
          </div>
-     else
-         return <div className="outro"><span>Twoj wynik to {this.props.score}</span></div>
   }
+}
 }
 class App extends React.Component{
   render(){
-      return <GameCore />
+      return <GameCore/>
   }
 }
 
