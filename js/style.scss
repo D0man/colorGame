@@ -1,0 +1,42 @@
+body{
+   background-color: purple;
+   font-family: 'Baloo Bhaina', cursive;
+}
+h1{
+   text-align: center;
+}
+.gameBody{
+   margin: 0 auto;
+   background-color: white;
+   border: solid 2px #0044FF;
+   height: 250px;
+   width: 400px;
+   font-size: 30px;
+   text-align: center;
+   .gameNav{
+      font-size: 20px;
+      background-color: #00ffff;
+      span{
+         cursor: auto;
+         color:black;
+         margin-left: 10px;
+      }
+   }
+   .question{
+      box-sizing: content-box;
+      padding:20px;
+      color: blue;
+   }
+   span{
+      cursor: pointer;
+      color:red;
+      margin-left: 0 auto;
+   }
+   span:nth-child(2){
+      color:blue;
+      margin: 0 20px;
+   }
+   span:nth-child(3){
+      color:green;
+   }
+}
