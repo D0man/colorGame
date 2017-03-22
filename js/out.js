@@ -9587,10 +9587,14 @@ var Option = function (_React$Component3) {
             _react2.default.createElement(
                'div',
                { className: 'gameBody' },
-               'difficult',
                _react2.default.createElement(
                   'div',
                   { className: 'difficult' },
+                  _react2.default.createElement(
+                     'div',
+                     null,
+                     'difficult'
+                  ),
                   _react2.default.createElement(
                      'div',
                      { onClick: function onClick() {
@@ -9764,16 +9768,7 @@ var GameTime = function (_React$Component5) {
                      } },
                   'Play Again '
                ),
-               _react2.default.createElement(
-                  'div',
-                  null,
-                  _react2.default.createElement('input', { type: 'text', placeholder: 'nickname' }),
-                  _react2.default.createElement(
-                     'button',
-                     null,
-                     'save score'
-                  )
-               )
+               _react2.default.createElement('div', null)
             );
          }
       }
@@ -9884,12 +9879,7 @@ var GameCore = function (_React$Component6) {
                   _react2.default.createElement(
                      'div',
                      { onClick: this.handleRules },
-                     'Instrution'
-                  ),
-                  _react2.default.createElement(
-                     'div',
-                     null,
-                     'hiscore'
+                     'Instruction'
                   )
                )
             );
@@ -10464,7 +10454,7 @@ exports = module.exports = __webpack_require__(82)();
 
 
 // module
-exports.push([module.i, "body {\n  background-color: purple;\n  font-family: 'Baloo Bhaina', cursive; }\n\nh1 {\n  text-align: center; }\n\n.out {\n  position: absolute;\n  height: 250px;\n  width: 400px;\n  background-color: black;\n  color: white; }\n\n.gameBody {\n  position: relative;\n  margin: 0 auto;\n  background-color: white;\n  border: solid 2px #0044FF;\n  height: 250px;\n  width: 400px;\n  font-size: 30px;\n  text-align: center; }\n  .gameBody .gameNav {\n    font-size: 20px;\n    background-color: #00ffff; }\n    .gameBody .gameNav span {\n      cursor: auto;\n      color: black;\n      margin-left: 10px; }\n  .gameBody .question {\n    box-sizing: content-box;\n    padding: 20px;\n    color: blue; }\n  .gameBody span {\n    cursor: pointer;\n    color: red;\n    margin-left: 0 auto; }\n  .gameBody span:nth-child(2) {\n    color: blue;\n    margin: 0 20px; }\n  .gameBody span:nth-child(3) {\n    color: green; }\n", ""]);
+exports.push([module.i, "body {\n  background-color: purple;\n  font-family: 'Baloo Bhaina', cursive; }\n\nh1 {\n  text-align: center; }\n\n.out {\n  position: absolute;\n  height: 450px;\n  width: 400px;\n  background-color: black;\n  color: white; }\n\n.difficult {\n  display: inline-block; }\n\n.gameBody {\n  position: relative;\n  margin: 0 auto;\n  background-color: white;\n  border: solid 2px #0044FF;\n  height: 450px;\n  width: 400px;\n  font-size: 30px;\n  text-align: center; }\n  .gameBody .gameNav {\n    font-size: 20px;\n    background-color: #00ffff; }\n    .gameBody .gameNav span {\n      cursor: auto;\n      color: black;\n      margin-left: 10px; }\n  .gameBody .question {\n    box-sizing: content-box;\n    padding: 20px;\n    color: blue; }\n  .gameBody span {\n    cursor: pointer;\n    color: red;\n    margin-left: 0 auto; }\n  .gameBody span:nth-child(2) {\n    color: blue;\n    margin: 0 20px; }\n  .gameBody span:nth-child(3) {\n    color: green; }\n  .gameBody span:nth-child(5) {\n    margin: 0 20px; }\n  .gameBody span:nth-child(8) {\n    margin: 0 20px; }\n", ""]);
 
 // exports
 

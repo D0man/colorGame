@@ -7,18 +7,20 @@ h1{
 }
 .out{
    position:absolute;
-   height: 250px;
+   height: 450px;
    width:400px;
    background-color: black;
    color:white;
 }
-
+.difficult{
+   display: inline-block;
+}
 .gameBody{
    position: relative;
    margin: 0 auto;
    background-color: white;
    border: solid 2px #0044FF;
-   height: 250px;
+   height: 450px;
    width: 400px;
    font-size: 30px;
    text-align: center;
@@ -47,5 +49,11 @@ h1{
    }
    span:nth-child(3){
       color:green;
+   }
+   span:nth-child(5){
+      margin: 0 20px;
+   }
+   span:nth-child(8){
+      margin: 0 20px;
    }
 }

@@ -65,8 +65,8 @@ class Option extends React.Component{
    }
    }
    render(){
-      return <div><Title/><div  className='gameBody'>difficult
-         <div className="difficult">
+      return <div><Title/><div  className='gameBody'>
+         <div className="difficult"><div>difficult</div>
             <div onClick={()=>{this.handleLevelDown()}} >&#8592;</div><div>{this.state.difficult[this.state.index]}</div>
             <div onClick={()=>{this.handleLevelUp()}}>&#8594;</div></div>
 
@@ -144,7 +144,7 @@ class GameTime extends React.Component{
             </div>
          }
          else{
-             return <div className='out'><div><span>Score: {this.props.score-this.props.wrong}</span></div><div onClick={()=>this.handleRestart()}>Play Again </div><div><input type="text" placeholder="nickname"/><button>save score</button></div></div>
+             return <div className='out'><div><span>Score: {this.props.score-this.props.wrong}</span></div><div onClick={()=>this.handleRestart()}>Play Again </div><div></div></div>
       }
       }
 }
@@ -216,7 +216,7 @@ handleStart = ()=>{
   render(){
 
          if (this.state.mode == 0){
-            return <div><Title/><div  className='gameBody' ><div onClick={this.handleStart}>{this.state.start}</div><div onClick = {this.handleOption} >options</div><div onClick = {this.handleRules}>Instrution</div><div>hiscore</div></div></div>
+            return <div><Title/><div  className='gameBody' ><div onClick={this.handleStart}>{this.state.start}</div><div onClick = {this.handleOption} >options</div><div onClick = {this.handleRules}>Instruction</div></div></div>
          }
          else if(this.state.mode == 2){
             return <Option mode = {()=>this.handleMenu()} diff={this.state.diff}/>
