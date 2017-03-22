@@ -9667,7 +9667,7 @@ var GameTime = function (_React$Component5) {
       var _this6 = _possibleConstructorReturn(this, (GameTime.__proto__ || Object.getPrototypeOf(GameTime)).call(this, props));
 
       _this6.state = {
-         counter: 10,
+         counter: 50,
          score: _this6.props.score,
          wrong: _this6.props.wrong,
          over: 0
@@ -9683,7 +9683,7 @@ var GameTime = function (_React$Component5) {
          this.setState({
             over: 0,
             score: 0,
-            counter: 10
+            counter: 50
          });
          this.props.restart();
          this.timerId = setInterval(function () {
