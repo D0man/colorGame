@@ -97,7 +97,7 @@ class GameTime extends React.Component{
    constructor(props){
    super(props)
    this.state = {
-      counter: 10,
+      counter: 50,
       score: this.props.score,
       wrong: this.props.wrong,
       over: 0
@@ -107,7 +107,7 @@ class GameTime extends React.Component{
       this.setState({
          over:0,
          score:0,
-         counter:10
+         counter:50
       })
       this.props.restart();
       this.timerId= setInterval(()=>{
