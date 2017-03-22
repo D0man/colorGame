@@ -2,8 +2,10 @@ import "./style.scss";
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+//function that randomize position in array
+
 function randomize(arr){
-   let currentIndex = 3        //arr.length jak wiecej kolorow
+   let currentIndex = diff        //number of colors
    let randomIndex = 0;
    let temp = 3;
    while(currentIndex != 0){
@@ -15,80 +17,113 @@ function randomize(arr){
    }
    return arr;
 }
-let intro = true;
-let colorArr =['blue','red','green','pink'];
-let colorText =['blue','red','green','pink'];
-let colorMainText=['blue','red','green','pink'];
-let answer=randomize(colorMainText)[0];
-// class RandomColor extends React.Component{
-//    constructor(props){
-//       super(props);
-//       this.state={
-//       color: colorArr,
-//       colorText: colorText,
-//       score: 0,
-//       wrong: 0
+let diff=2;
+let colorArr = ['blue','red','green','pink','yellow','orange','black','violet','grey']; //array with colors of text
+let colorText = ['blue','red','green','pink','yellow','orange','black','violet','grey']; //array with words
+let colorMainText = ['blue','red','green','pink','yellow','orange','black','violet','grey'];
+// array with colors of main text
+let answer = randomize(colorMainText)[0];
+class Title extends React.Component{
+   render(){
+   return <h1>Color Game</h1>
+   }
+}
+// class ColorPicker extends React.Component{
+//    render(){
+//       return <select>{colorArr.map((el)=>{return <option key={el}>{el}</option>})}</select>
 //       }
-//    }
-//    handleClick = (i)=>{
-//       if (this.state.color[i]=="red"){
-//          this.setState({score: this.state.score+1})
-//          console.log("dobrze:"+ this.state.score);
-//       }
-//       else{
-//       this.setState({wrong: this.state.wrong+1})
-//       console.log("zle:"+this.state.wrong);
-//       }
-//    }
-//       render(){
-//       randomize(colorArr);
-//       randomize(colorText);
-//       return <div>
-//            {this.state.color.map((el,i)=>{
-//              if(i>2)
-//                return null;
-//              else
-//                return <span key={this.state.color[i]} style={{color: el}}  onClick={()=>this.handleClick(i)} >{this.state.colorText[i]}</span>;
-//          })}
-//          </div>
-//    }
 // }
-// class Intro extends React.Component{
-//    constructor(props){
-//    super(props);
-//    this.state={
-//       napis: "start game"
-//    }
-// }
-// render(){
-//    return }
-// }
+class Rules extends React.Component{
+   render(){
+      return <div><Title/><div  className='gameBody'>Clik on name of what color is word on the up
+         <div onClick={this.props.mode}> back</div> </div> </div>
+   }
+}
+class Option extends React.Component{
+   constructor(){
+      super();
+      this.state = {
+         difficult:["easy","medium","hard"],
+         index: 0,
+         diff: 2
+      }
+   }
+   handleLevelDown(){
+      if(this.state.index!=0){
+      this.setState({
+         index: this.state.index-1,
+      })
+      diff=diff-3;
+   }
+   }
+   handleLevelUp(){
+      if(this.state.index!=2){
+      this.setState({
+         index: this.state.index+1,
+         })
+      diff=diff+3;
+   }
+   }
+   render(){
+      return <div><Title/><div  className='gameBody'>difficult
+         <div className="difficult">
+            <div onClick={()=>{this.handleLevelDown()}} >&#8592;</div><div>{this.state.difficult[this.state.index]}</div>
+            <div onClick={()=>{this.handleLevelUp()}}>&#8594;</div></div>
+
+
+
+
+            <div onClick={this.props.mode}> back</div>
+
+         </div>
+
+         </div>
+   }
+}
 class MainColor extends React.Component{
    constructor(props){
       super(props);
       this.state={
          color: randomize(colorArr),
-         colorText: randomize(colorText),
+         colorText: colorText,
          answer: this.props.answer
       }
    }
       render(){
-            //answer = randomize(colorMainText)[0];
             return <span style={{color: `${this.props.answer}`}}>{this.state.colorText[0]}</span>;
    }
 }
 class GameTime extends React.Component{
    constructor(props){
    super(props)
-   this.state ={
-      counter: 30,
+   this.state = {
+      counter: 10,
       score: this.props.score,
-      wrong: this.props.wrong
+      wrong: this.props.wrong,
+      over: 0
    }
    }
+   handleRestart(){
+      this.setState({
+         over:0,
+         score:0,
+         counter:10
+      })
+      this.props.restart();
+      this.timerId= setInterval(()=>{
+      this.setState(
+        { counter : this.state.counter-1 }
+        , this.clear
+      );
+    },1000);
+      }
    clear(){
      if(this.state.counter == 0){
        clearInterval(this.timerId);
+       this.setState({
+          counter: 10,
+          over:1
+       })
      }
   }
   componentDidMount() {
@@ -103,84 +138,115 @@ class GameTime extends React.Component{
     clearInterval(this.timerId);
   }
   render(){
-     if (this.state.counter!=0){
+     if (this.state.over != 1){
          return <div>
             <div><span>{this.state.counter}S</span><span>Good:{this.props.score}</span><span>Wrong: {this.props.wrong}</span></div>
             </div>
          }
          else{
-             return <div className='out'><div><span>Score: {this.props.score-this.props.wrong}</span></div><div>Play Again (push f5)</div><div>HighScore (nie dziala)</div></div>
+             return <div className='out'><div><span>Score: {this.props.score-this.props.wrong}</span></div><div onClick={()=>this.handleRestart()}>Play Again </div><div><input type="text" placeholder="nickname"/><button>save score</button></div></div>
       }
       }
 }
 class GameCore extends React.Component{
   constructor(props){
     super(props);
-    this.state ={
+    this.state = {
       score: 0,
       wrong: 0,
-      color: randomize(colorArr),
-      colorText: randomize(colorText),
-      answer: randomize(colorMainText)[0],
-      intro:true,
-      napis: "start game"
-
+      color: colorArr,
+      colorText: colorText,
+      answer: colorMainText[0],
+      mode:0,
+      start: "start game",
+      diff: 4
     }
-    console.log(this.state.colorText[0]);
-    console.log(this.state.colorText[1]);
-    console.log(this.state.colorText[2]);
-    console.log("odpowiedz:"+this.state.answer);
 }
-    handleStart = ()=>{
+componentWillMount() {
+   console.log(diff);
+   this.setState({
+      diff: diff
+   });
+}
+
+handleStart = ()=>{
       this.setState({
-         intro: false
+         mode: 1,
+         score: 0,
+         wrong: 0
       })
    }
+   handleRules = ()=>{
+     this.setState({
+        mode: 3,
+     })
+  }
+  handleOption = ()=>{
+    this.setState({
+      mode: 2,
+    })
+    diff=2;
+}
+   handleMenu = ()=>{
+     this.setState({
+        mode: 0,
+        score: 0,
+       wrong: 0
+     })
+  }
     handleClick = (i)=>{
-      console.log(this.state.colorText[i]);
-      console.log(this.state.colorText[0]);
-      console.log(this.state.colorText[1]);
-      console.log(this.state.colorText[2]);
-
-      console.log("odpowiedz po kliku:"+this.state.answer);
       if (this.state.colorText[i]==this.state.answer){
-
          this.setState({
             score: this.state.score+1,
             color: randomize(colorArr),
             colorText: randomize(colorText),
             answer: randomize(colorMainText)[0]
          })
-         //console.log("dobrze:"+ this.state.score);
       }
       else{
       this.setState({wrong: this.state.wrong+1,
          color: randomize(colorArr),
          colorText: randomize(colorText),
          answer: randomize(colorMainText)[0],
+
       })
-      //console.log("zle:"+this.state.wrong);
       }
    }
 
   render(){
-     console.log(this.state.intro);
-         if (this.state.intro){
-            return <div  className='gameBody' onClick={this.handleStart}><div>{this.state.napis}</div><div></div></div>
+
+         if (this.state.mode == 0){
+            return <div><Title/><div  className='gameBody' ><div onClick={this.handleStart}>{this.state.start}</div><div onClick = {this.handleOption} >options</div><div onClick = {this.handleRules}>Instrution</div><div>hiscore</div></div></div>
+         }
+         else if(this.state.mode == 2){
+            return <Option mode = {()=>this.handleMenu()} diff={this.state.diff}/>
+         }
+         else if(this.state.mode == 3){
+            return <Rules mode= {()=>this.handleMenu()}/>
          }
          else{
-         return <div className="gameBody">
-            <GameTime className="gameNav" wrong={this.state.wrong} score={this.state.score}/>
+         return <div><Title/><div className="gameBody">
+            <GameTime className="gameNav" wrong = {this.state.wrong} score = {this.state.score}
+               restart = {()=>this.handleStart()}/>
             <div><MainColor answer={this.state.answer}/></div>
-            <div><div>
+<div><div>
+               {console.log(diff)}
                  {this.state.color.map((el,i)=>{
-                   if(i>2)
+                   if(i>diff){
                      return null;
-                   else
-                     return <span key={this.state.color[i]} style={{color: el}}  onClick={()=>this.handleClick(i)} >{this.state.colorText[i]}</span>;
+                  }
+                   else{
+                     if(i == 2||i == 5){
+                        return <span key = {this.state.color[i]} style = {{color: el}}  onClick = {()=>this.handleClick(i)}>{this.state.colorText[i]}<br/></span>;
+                        }
+                     else{
+                        return <span key = {this.state.color[i]} style = {{color: el}}  onClick = {()=>this.handleClick(i)}>{this.state.colorText[i]}</span>;
+                     }
+                     }
                })}
                </div></div>
-         </div>
+            <div onClick = {this.handleMenu}>back</div>
+         </div></div>
   }
 }
 }
