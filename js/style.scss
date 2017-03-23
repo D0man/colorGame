@@ -7,53 +7,77 @@ h1{
 }
 .out{
    position:absolute;
-   height: 450px;
+   height: 100%;
    width:400px;
    background-color: black;
    color:white;
 }
-.difficult{
-   display: inline-block;
+.colors{
+   margin:0 auto;
+   width: 400px;
+   height: 450px;
+   display:flex;
+   flex-flow: row;
+   justify-content: center;
+   padding:10px;
+   span{
+      margin-left: 10px;
+   }
+   input{
+      margin-left: 10px;
+   }
+}
+.back{
+   position: absolute;
+   bottom: -50px;
+   left:40%;
 }
 .gameBody{
    position: relative;
    margin: 0 auto;
    background-color: white;
    border: solid 2px #0044FF;
-   height: 450px;
+   min-height: 250px;
+   max-height: 450px;
    width: 400px;
    font-size: 30px;
    text-align: center;
-   .gameNav{
-      font-size: 20px;
-      background-color: #00ffff;
-      span{
-         cursor: auto;
-         color:black;
-         margin-left: 10px;
-      }
-   }
-   .question{
-      box-sizing: content-box;
-      padding:20px;
-      color: blue;
-   }
    span{
       cursor: pointer;
-      color:red;
-      margin-left: 0 auto;
-   }
-   span:nth-child(2){
-      color:blue;
-      margin: 0 20px;
-   }
-   span:nth-child(3){
-      color:green;
-   }
-   span:nth-child(5){
-      margin: 0 20px;
-   }
-   span:nth-child(8){
-      margin: 0 20px;
+      margin-left: 10px;
    }
 }
+   .gameNav{
+       font-size: 20px;
+       background-color: #00ffff;
+       span{
+          color: black;
+          margin-left: 10px;
+
+       }
+    }
+//    .question{
+//       box-sizing: content-box;
+//       padding:20px;
+//       color: blue;
+//    }
+//    span{
+//       cursor: pointer;
+//       color:red;
+//       margin-left: 0 auto;
+//    }
+//    span:nth-child(2){
+//       color:blue;
+//       margin: 0 20px;
+//    }
+//    span:nth-child(3){
+//       color:green;
+//       margin: 0 20px;
+//    }
+//    span:nth-child(5){
+//       margin: 0 20px;
+//    }
+//    span:nth-child(8){
+//       margin: 0 20px;
+//    }
+// }

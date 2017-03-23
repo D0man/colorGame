@@ -2,10 +2,15 @@ import "./style.scss";
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+//function that gives back orginal values in array
+function resetcolor(){
+   colorArr = ['blue','red','green','pink','yellow','orange','black','violet','grey'];
+   colorText = ['blue','red','green','pink','yellow','orange','black','violet','grey'];
+   colorMainText = ['blue','red','green','pink','yellow','orange','black','violet','grey'];
+}
 //function that randomize position in array
-
 function randomize(arr){
-   let currentIndex = diff        //number of colors
+   let currentIndex = diff+1        //number of colors
    let randomIndex = 0;
    let temp = 3;
    while(currentIndex != 0){
@@ -17,7 +22,8 @@ function randomize(arr){
    }
    return arr;
 }
-let diff=2;
+let diff=2;// level of game how many colors
+let resetArr =['blue','red','green','pink','yellow','orange','black','violet','grey'];
 let colorArr = ['blue','red','green','pink','yellow','orange','black','violet','grey']; //array with colors of text
 let colorText = ['blue','red','green','pink','yellow','orange','black','violet','grey']; //array with words
 let colorMainText = ['blue','red','green','pink','yellow','orange','black','violet','grey'];
@@ -28,6 +34,7 @@ class Title extends React.Component{
    return <h1>Color Game</h1>
    }
 }
+//future plan to implement colors of your own choice
 // class ColorPicker extends React.Component{
 //    render(){
 //       return <select>{colorArr.map((el)=>{return <option key={el}>{el}</option>})}</select>
@@ -35,8 +42,8 @@ class Title extends React.Component{
 // }
 class Rules extends React.Component{
    render(){
-      return <div><Title/><div  className='gameBody'>Clik on name of what color is word on the up
-         <div onClick={this.props.mode}> back</div> </div> </div>
+      return <div><Title/><div  className='gameBody'>Clik on text of what color is word on the up
+         <div className='back' onClick={this.props.mode}> back</div> </div> </div>
    }
 }
 class Option extends React.Component{
@@ -45,15 +52,18 @@ class Option extends React.Component{
       this.state = {
          difficult:["easy","medium","hard"],
          index: 0,
-         diff: 2
+         diff: diff
       }
    }
+
    handleLevelDown(){
       if(this.state.index!=0){
       this.setState({
          index: this.state.index-1,
       })
       diff=diff-3;
+      resetcolor();
+      console.log(colorArr);
    }
    }
    handleLevelUp(){
@@ -62,18 +72,19 @@ class Option extends React.Component{
          index: this.state.index+1,
          })
       diff=diff+3;
+      resetcolor();
    }
    }
    render(){
       return <div><Title/><div  className='gameBody'>
          <div className="difficult"><div>difficult</div>
-            <div onClick={()=>{this.handleLevelDown()}} >&#8592;</div><div>{this.state.difficult[this.state.index]}</div>
-            <div onClick={()=>{this.handleLevelUp()}}>&#8594;</div></div>
+            <span onClick={()=>{this.handleLevelDown()}} >&#8592;</span><span>{this.state.difficult[this.state.index]}</span>
+            <span onClick={()=>{this.handleLevelUp()}}>&#8594;</span></div>
 
 
 
 
-            <div onClick={this.props.mode}> back</div>
+            <div className='back'onClick={this.props.mode}> back</div>
 
          </div>
 
@@ -90,7 +101,7 @@ class MainColor extends React.Component{
       }
    }
       render(){
-            return <span style={{color: `${this.props.answer}`}}>{this.state.colorText[0]}</span>;
+            return <span style={{color: `${this.props.answer}`}}>{this.props.text}</span>;
    }
 }
 class GameTime extends React.Component{
@@ -104,10 +115,11 @@ class GameTime extends React.Component{
    }
    }
    handleRestart(){
+      console.log(colorArr);
       this.setState({
          over:0,
          score:0,
-         counter:50
+         counter:30
       })
       this.props.restart();
       this.timerId= setInterval(()=>{
@@ -159,7 +171,7 @@ class GameCore extends React.Component{
       answer: colorMainText[0],
       mode:0,
       start: "start game",
-      diff: 4
+      //diff: 3
     }
 }
 componentWillMount() {
@@ -173,7 +185,10 @@ handleStart = ()=>{
       this.setState({
          mode: 1,
          score: 0,
-         wrong: 0
+         wrong: 0,
+         color: colorArr,
+         colorText: colorText,
+         answer: colorMainText[0]
       })
    }
    handleRules = ()=>{
@@ -214,7 +229,7 @@ handleStart = ()=>{
    }
 
   render(){
-
+         resetcolor()
          if (this.state.mode == 0){
             return <div><Title/><div  className='gameBody' ><div onClick={this.handleStart}>{this.state.start}</div><div onClick = {this.handleOption} >options</div><div onClick = {this.handleRules}>Instruction</div></div></div>
          }
@@ -228,7 +243,7 @@ handleStart = ()=>{
          return <div><Title/><div className="gameBody">
             <GameTime className="gameNav" wrong = {this.state.wrong} score = {this.state.score}
                restart = {()=>this.handleStart()}/>
-            <div><MainColor answer={this.state.answer}/></div>
+            <div><MainColor answer={this.state.answer} text={this.state.colorText[0]}/></div>
 <div><div>
                {console.log(diff)}
                  {this.state.color.map((el,i)=>{
@@ -236,7 +251,7 @@ handleStart = ()=>{
                      return null;
                   }
                    else{
-                     if(i == 2||i == 5){
+                     if(i == 2||i == 5||i==8){
                         return <span key = {this.state.color[i]} style = {{color: el}}  onClick = {()=>this.handleClick(i)}>{this.state.colorText[i]}<br/></span>;
                         }
                      else{
@@ -245,7 +260,7 @@ handleStart = ()=>{
                      }
                })}
                </div></div>
-            <div onClick = {this.handleMenu}>back</div>
+            <div className='back' onClick = {this.handleMenu}>back</div>
          </div></div>
   }
 }

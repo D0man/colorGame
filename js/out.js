@@ -9453,10 +9453,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+//function that gives back orginal values in array
+function resetcolor() {
+   colorArr = ['blue', 'red', 'green', 'pink', 'yellow', 'orange', 'black', 'violet', 'grey'];
+   colorText = ['blue', 'red', 'green', 'pink', 'yellow', 'orange', 'black', 'violet', 'grey'];
+   colorMainText = ['blue', 'red', 'green', 'pink', 'yellow', 'orange', 'black', 'violet', 'grey'];
+}
 //function that randomize position in array
-
 function randomize(arr) {
-   var currentIndex = diff; //number of colors
+   var currentIndex = diff + 1; //number of colors
    var randomIndex = 0;
    var temp = 3;
    while (currentIndex != 0) {
@@ -9468,7 +9473,8 @@ function randomize(arr) {
    }
    return arr;
 }
-var diff = 2;
+var diff = 2; // level of game how many colors
+var resetArr = ['blue', 'red', 'green', 'pink', 'yellow', 'orange', 'black', 'violet', 'grey'];
 var colorArr = ['blue', 'red', 'green', 'pink', 'yellow', 'orange', 'black', 'violet', 'grey']; //array with colors of text
 var colorText = ['blue', 'red', 'green', 'pink', 'yellow', 'orange', 'black', 'violet', 'grey']; //array with words
 var colorMainText = ['blue', 'red', 'green', 'pink', 'yellow', 'orange', 'black', 'violet', 'grey'];
@@ -9497,6 +9503,7 @@ var Title = function (_React$Component) {
 
    return Title;
 }(_react2.default.Component);
+//future plan to implement colors of your own choice
 // class ColorPicker extends React.Component{
 //    render(){
 //       return <select>{colorArr.map((el)=>{return <option key={el}>{el}</option>})}</select>
@@ -9523,10 +9530,10 @@ var Rules = function (_React$Component2) {
             _react2.default.createElement(
                'div',
                { className: 'gameBody' },
-               'Clik on name of what color is word on the up',
+               'Clik on text of what color is word on the up',
                _react2.default.createElement(
                   'div',
-                  { onClick: this.props.mode },
+                  { className: 'back', onClick: this.props.mode },
                   ' back'
                ),
                ' '
@@ -9550,7 +9557,7 @@ var Option = function (_React$Component3) {
       _this3.state = {
          difficult: ["easy", "medium", "hard"],
          index: 0,
-         diff: 2
+         diff: diff
       };
       return _this3;
    }
@@ -9563,6 +9570,8 @@ var Option = function (_React$Component3) {
                index: this.state.index - 1
             });
             diff = diff - 3;
+            resetcolor();
+            console.log(colorArr);
          }
       }
    }, {
@@ -9573,6 +9582,7 @@ var Option = function (_React$Component3) {
                index: this.state.index + 1
             });
             diff = diff + 3;
+            resetcolor();
          }
       }
    }, {
@@ -9596,19 +9606,19 @@ var Option = function (_React$Component3) {
                      'difficult'
                   ),
                   _react2.default.createElement(
-                     'div',
+                     'span',
                      { onClick: function onClick() {
                            _this4.handleLevelDown();
                         } },
                      '\u2190'
                   ),
                   _react2.default.createElement(
-                     'div',
+                     'span',
                      null,
                      this.state.difficult[this.state.index]
                   ),
                   _react2.default.createElement(
-                     'div',
+                     'span',
                      { onClick: function onClick() {
                            _this4.handleLevelUp();
                         } },
@@ -9617,7 +9627,7 @@ var Option = function (_React$Component3) {
                ),
                _react2.default.createElement(
                   'div',
-                  { onClick: this.props.mode },
+                  { className: 'back', onClick: this.props.mode },
                   ' back'
                )
             )
@@ -9650,7 +9660,7 @@ var MainColor = function (_React$Component4) {
          return _react2.default.createElement(
             'span',
             { style: { color: '' + this.props.answer } },
-            this.state.colorText[0]
+            this.props.text
          );
       }
    }]);
@@ -9680,6 +9690,7 @@ var GameTime = function (_React$Component5) {
       value: function handleRestart() {
          var _this7 = this;
 
+         console.log(colorArr);
          this.setState({
             over: 0,
             score: 0,
@@ -9789,7 +9800,10 @@ var GameCore = function (_React$Component6) {
          _this10.setState({
             mode: 1,
             score: 0,
-            wrong: 0
+            wrong: 0,
+            color: colorArr,
+            colorText: colorText,
+            answer: colorMainText[0]
          });
       };
 
@@ -9840,7 +9854,7 @@ var GameCore = function (_React$Component6) {
          answer: colorMainText[0],
          mode: 0,
          start: "start game",
-         diff: 4
+         diff: 3
       };
       return _this10;
    }
@@ -9858,6 +9872,7 @@ var GameCore = function (_React$Component6) {
       value: function render() {
          var _this11 = this;
 
+         resetcolor();
          if (this.state.mode == 0) {
             return _react2.default.createElement(
                'div',
@@ -9906,7 +9921,7 @@ var GameCore = function (_React$Component6) {
                   _react2.default.createElement(
                      'div',
                      null,
-                     _react2.default.createElement(MainColor, { answer: this.state.answer })
+                     _react2.default.createElement(MainColor, { answer: this.state.answer, text: this.state.colorText[0] })
                   ),
                   _react2.default.createElement(
                      'div',
@@ -9919,7 +9934,7 @@ var GameCore = function (_React$Component6) {
                            if (i > diff) {
                               return null;
                            } else {
-                              if (i == 2 || i == 5) {
+                              if (i == 2 || i == 5 || i == 8) {
                                  return _react2.default.createElement(
                                     'span',
                                     { key: _this11.state.color[i], style: { color: el }, onClick: function onClick() {
@@ -9943,7 +9958,7 @@ var GameCore = function (_React$Component6) {
                   ),
                   _react2.default.createElement(
                      'div',
-                     { onClick: this.handleMenu },
+                     { className: 'back', onClick: this.handleMenu },
                      'back'
                   )
                )
@@ -10454,7 +10469,7 @@ exports = module.exports = __webpack_require__(82)();
 
 
 // module
-exports.push([module.i, "body {\n  background-color: purple;\n  font-family: 'Baloo Bhaina', cursive; }\n\nh1 {\n  text-align: center; }\n\n.out {\n  position: absolute;\n  height: 450px;\n  width: 400px;\n  background-color: black;\n  color: white; }\n\n.difficult {\n  display: inline-block; }\n\n.gameBody {\n  position: relative;\n  margin: 0 auto;\n  background-color: white;\n  border: solid 2px #0044FF;\n  height: 450px;\n  width: 400px;\n  font-size: 30px;\n  text-align: center; }\n  .gameBody .gameNav {\n    font-size: 20px;\n    background-color: #00ffff; }\n    .gameBody .gameNav span {\n      cursor: auto;\n      color: black;\n      margin-left: 10px; }\n  .gameBody .question {\n    box-sizing: content-box;\n    padding: 20px;\n    color: blue; }\n  .gameBody span {\n    cursor: pointer;\n    color: red;\n    margin-left: 0 auto; }\n  .gameBody span:nth-child(2) {\n    color: blue;\n    margin: 0 20px; }\n  .gameBody span:nth-child(3) {\n    color: green; }\n  .gameBody span:nth-child(5) {\n    margin: 0 20px; }\n  .gameBody span:nth-child(8) {\n    margin: 0 20px; }\n", ""]);
+exports.push([module.i, "body {\n  background-color: purple;\n  font-family: 'Baloo Bhaina', cursive; }\n\nh1 {\n  text-align: center; }\n\n.out {\n  position: absolute;\n  height: 100%;\n  width: 400px;\n  background-color: black;\n  color: white; }\n\n.colors {\n  margin: 0 auto;\n  width: 400px;\n  height: 450px;\n  display: flex;\n  flex-flow: row;\n  justify-content: center;\n  padding: 10px; }\n  .colors span {\n    margin-left: 10px; }\n  .colors input {\n    margin-left: 10px; }\n\n.back {\n  position: absolute;\n  bottom: -50px;\n  left: 40%; }\n\n.gameBody {\n  position: relative;\n  margin: 0 auto;\n  background-color: white;\n  border: solid 2px #0044FF;\n  min-height: 250px;\n  max-height: 450px;\n  width: 400px;\n  font-size: 30px;\n  text-align: center; }\n  .gameBody span {\n    cursor: pointer;\n    margin-left: 10px; }\n\n.gameNav {\n  font-size: 20px;\n  background-color: #00ffff; }\n  .gameNav span {\n    color: black;\n    margin-left: 10px; }\n", ""]);
 
 // exports
 
