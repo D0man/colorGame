@@ -1,4 +1,4 @@
-# color Game
+# Color Game
 
 Simple game where you need to click on the right color to get points. Every time you click text - color will randomly change. There are three dificulty levels with 3, 6 and 9 answers. You have 50 seconds to gain score, good answers will increase it's value, bad answers will decrease. 
 
